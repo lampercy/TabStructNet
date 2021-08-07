@@ -1,8 +1,16 @@
 import os
-import cv2
+
+import skimage
+import tensorflow as tf
+
 from mrcnn.config import Config
 from mrcnn import model as modellib
 from mrcnn import visualize
+
+
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+session = tf.Session(config=config)
 
 
 class TabNetConfig(Config):
@@ -12,7 +20,6 @@ class TabNetConfig(Config):
 
     GPU_COUNT = 1
     NUM_CLASSES = 1 + 1  # COCO has 80 classes
-
     DETECTION_MIN_CONFIDENCE = 0
 
 
@@ -32,7 +39,18 @@ if __name__ == '__main__':
                               config=config,
                               model_dir=args.model_dir)
 
-    image = cv2.imread(args.image_path)
+    model_path = model.find_last()
+    model.load_weights(model_path, by_name=True)
+
+    image = skimage.io.imread(args.image_path)
+    if image.ndim != 3:
+        image = skimage.color.gray2rgb(image)
+        print('gray scale')
+
+    if image.shape[-1] == 4:
+        image = image[..., :3]
+        print('alpha channel removed')
+
     r = model.detect([image], verbose=0)[0]
 
     output_im = visualize.generate_instances_image(

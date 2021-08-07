@@ -3925,7 +3925,7 @@ class MaskRCNN():
             self.keras_model.metrics_names.append(name)
             loss = (tf.reduce_mean(layer.output) *
                     self.config.LOSS_WEIGHTS.get(name, 1.))
-            self.keras_model.metrics_tensors.append(loss)
+            self.keras_model.add_metric(loss, name)
 
     def set_trainable(self,
                       layer_regex,

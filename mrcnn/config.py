@@ -92,11 +92,11 @@ class Config(object):
     RPN_TRAIN_ANCHORS_PER_IMAGE = 1024
 
     # ROIs kept after tf.nn.top_k and before non-maximum suppression
-    PRE_NMS_LIMIT = 10000
+    PRE_NMS_LIMIT = 5000
 
     # ROIs kept after non-maximum suppression (training and inference)
-    POST_NMS_ROIS_TRAINING = 7500
-    POST_NMS_ROIS_INFERENCE = 7500
+    POST_NMS_ROIS_TRAINING = 4000
+    POST_NMS_ROIS_INFERENCE = 4000
 
     # If enabled, resizes instance masks to a smaller size to reduce
     # memory load. Recommended when using high-resolution images.
@@ -161,14 +161,14 @@ class Config(object):
     MASK_SHAPE = [28, 28]
 
     # Maximum number of ground truth instances to use in one image
-    MAX_GT_INSTANCES = 2000
+    MAX_GT_INSTANCES = 480
 
     # Bounding box refinement standard deviation for RPN and final detections.
     RPN_BBOX_STD_DEV = np.array([0.1, 0.1, 0.2, 0.2])
     BBOX_STD_DEV = np.array([0.1, 0.1, 0.2, 0.2])
 
     # Max number of final detections
-    DETECTION_MAX_INSTANCES = 2000
+    DETECTION_MAX_INSTANCES = 560
 
     # Minimum probability value to accept a detected instance
     # ROIs below this threshold are skipped

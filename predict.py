@@ -1,5 +1,7 @@
 import os
 
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+
 import skimage
 import tensorflow as tf
 
@@ -42,7 +44,7 @@ def predict_once(image_path, model):
             r['scores']
     )
 
-    name, ext = os.path.splitext(args.image_path)
+    name, ext = os.path.splitext(image_path)
 
     result_path = name + '-predicted' + ext
     output_im.figure.savefig(result_path)
